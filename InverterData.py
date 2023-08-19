@@ -172,6 +172,7 @@ if invstatus==1:
       except socket.timeout as msg:
         print("Connection timeout - inverter and/or gateway is offline");
         invstatus=0;
+        sys.exit(1)
 
     if invstatus==1:
       # PARSE RESPONSE (start position 56, end position 60)
