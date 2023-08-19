@@ -281,6 +281,11 @@ if influxdb=="1" and invstatus==0:
   Write2InfluxDB(InfluxData)
   if verbose=="1": print("Influx data: ", json.dumps(InfluxData, indent=4, sort_keys=False, ensure_ascii=False))
 
+def publish_one(topic, val):
+  result = client.publish(topic, str(val), retain=True)
+  result.wait_for_publish()
+  return result.is_published
+
 # MQTT integration (Domoticz, HA, pure MQTT)
 if mqtt==1:
   # Initialise MQTT connection
@@ -300,6 +305,29 @@ if mqtt==1:
         if verbose=="1": print("*** Data has been succesfully published to MQTT with topic: "+mqtt_topic)
       else:
         print("Error publishing data to MQTT")
+
+      all_ok = True
+      for json_key, mqtt_key in {
+        "PV1 Voltage (V)": "pv_voltage",
+        "PV1 Current (A)": "pv_current",
+        "Output active power (W)": "generation_power",
+        "L1 Voltage (V)": "grid_voltage",
+        "L1 Current (A)": "grid_current",
+        "Grid frequency (Hz)": "grid_frequency",
+        "Total production (kWh)": "generated_energy",
+        "Today production (Wh)": "generated_energy_today",
+      }.items():
+        val = jsonoutput[json_key]
+        if val < 0 or val == 0 and mqtt_key in ["generated_energy"]:
+          print(f"Bad value on {json_key}: {val}")
+          sys.exit(1)
+        if "(Wh)" in json_key:
+          val /= 1000  # Wh -> kWh
+        all_ok = all_ok and publish_one(mqtt_topic_base + "/" + mqtt_key, val)
+      if all_ok:
+        if verbose=="1": print("*** Per-topic data has been succesfully published to MQTT")
+      else:
+        print("Error publishing per-topic data to MQTT")
     # Send data to Domoticz if support enabled
     if DomoticzSupport=="1":
       if verbose=="1": print("*** MQTT messages for Domoticz:");
