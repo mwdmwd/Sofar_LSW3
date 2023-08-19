@@ -252,6 +252,9 @@ if invstatus>0:
   jsonoutput=json.loads(output)
   print("*** JSON output:")
   print(json.dumps(jsonoutput, indent=4, sort_keys=False, ensure_ascii=False))
+  if jsonoutput["Country"] != "Europe General":
+    print("Bad output")
+    sys.exit(1)
 
 # Write data to a prometheus integration file
 if prometheus=="1" and invstatus==1:
