@@ -129,7 +129,7 @@ for res in socket.getaddrinfo(inverter_ip, inverter_port, socket.AF_INET, socket
 
 if invstatus==1:
   if verbose=="1": print("connected successfully !");
-  while chunks<2:
+  while chunks<1:
     # Data frame begin
     start = binascii.unhexlify('A5') #start
     length=binascii.unhexlify('1700') # datalength
