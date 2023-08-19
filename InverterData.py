@@ -14,7 +14,6 @@ import paho.mqtt.client as paho
 import os
 import configparser
 import datetime
-from influxdb import InfluxDBClient
 from datetime import datetime
 
 def twosComplement_hex(hexval, reg):
@@ -93,6 +92,7 @@ timestamp=str(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'))
 
 # Initialise InfluxDB support
 if influxdb=="1":
+  from influxdb import InfluxDBClient
   ifclient = InfluxDBClient(ifhost,ifport,ifuser,ifpass,ifdb);
   InfluxData=[
     {
