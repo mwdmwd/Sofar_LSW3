@@ -318,6 +318,7 @@ if mqtt==1:
         "Today production (Wh)": "generated_energy_today",
       }.items():
         val = jsonoutput[json_key]
+        val = round(val, 3)
         if val < 0 or val == 0 and mqtt_key in ["generated_energy"]:
           print(f"Bad value on {json_key}: {val}")
           sys.exit(1)
