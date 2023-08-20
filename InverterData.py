@@ -215,7 +215,7 @@ if invstatus==1:
                       if response==2:
                         invstatus=1
                       else:
-                        invstatus=0
+                        invstatus=1  # Don't skip MQTT on standby, etc
                     if lang == "PL":
                       response='"'+option["valuePL"]+'"'
                     else:
