@@ -322,6 +322,8 @@ if mqtt==1:
         "Grid frequency (Hz)": "grid_frequency",
         "Total production (kWh)": "generated_energy",
         "Today production (Wh)": "generated_energy_today",
+        "Inverter module temperature (ºC)": "module_temperature",
+        "Inverter inner termperature (ºC)": "inner_temperature",
       }.items():
         val = jsonoutput[json_key]
         val = round(val, 3)
