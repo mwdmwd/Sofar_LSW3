@@ -177,6 +177,12 @@ if invstatus==1:
     if invstatus==1:
       # PARSE RESPONSE (start position 56, end position 60)
       if verbose=="1": print("Received data: ", data);
+      # Verify checksum
+      actual_checksum = sum(data[1:-2]) % 256
+      expected_checksum = data[-2]
+      if sum(data[1:-2]) % 256 != data[-2]:
+        print(f"Invalid checksum {actual_checksum:#x}, expected {expected_checksum:#x}")
+        sys.exit(1)
       i=pfin-pini
       a=0
       while a<=i:
