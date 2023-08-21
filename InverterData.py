@@ -258,7 +258,12 @@ if invstatus>0:
   jsonoutput=json.loads(output)
   print("*** JSON output:")
   print(json.dumps(jsonoutput, indent=4, sort_keys=False, ensure_ascii=False))
-  if jsonoutput["Country"] != "Europe General":
+  if (
+    jsonoutput["Country"] != "Europe General"
+    or jsonoutput["Total generation time (h)"] == 0
+    or jsonoutput["Today production (Wh)"] == 0
+    and jsonoutput["Today generation time (min)"] != 0
+  ):
     print("Bad output")
     sys.exit(1)
 
