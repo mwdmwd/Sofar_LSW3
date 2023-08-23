@@ -61,6 +61,7 @@ reg_start1=(int(configParser.get('SofarInverter', 'register_start1'),0))
 reg_end1=(int(configParser.get('SofarInverter', 'register_end1'),0))
 reg_start2=(int(configParser.get('SofarInverter', 'register_start2'),0))
 reg_end2=(int(configParser.get('SofarInverter', 'register_end2'),0))
+data_length=(int(configParser.get('SofarInverter', 'data_length'),0))
 mqtt=int(configParser.get('MQTT', 'mqtt'))
 mqtt_basic=configParser.get('MQTT', 'mqtt_basic')
 mqtt_server=configParser.get('MQTT', 'mqtt_server')
@@ -175,6 +176,10 @@ if invstatus==1:
           print("Connection timeout - inverter and/or gateway is offline");
         invstatus=0;
         sys.exit(1)
+
+    if len(data) < data_length:
+      print(f"Data is too short, have {len(data)} bytes, expecting at least {data_length}")
+      sys.exit(1)
 
     if invstatus==1:
       # PARSE RESPONSE (start position 56, end position 60)
