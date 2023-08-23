@@ -88,6 +88,7 @@ domoticz_mqtt_topic=configParser.get('Domoticz', 'domoticz_mqtt_topic')
 HomeAssistantSupport=configParser.get('HomeAssistant', 'homeassistant_support')
 ha_mqtt_topic=configParser.get('HomeAssistant', 'ha_mqtt_topic')
 # END CONFIG
+verbose = verbose and "-nv" not in sys.argv
 
 timestamp=str(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'))
 
