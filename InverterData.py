@@ -171,7 +171,8 @@ if invstatus==1:
           print("No data - Exit")
           sys.exit(1) #Exit, no data
       except socket.timeout as msg:
-        print("Connection timeout - inverter and/or gateway is offline");
+        if verbose=="1":
+          print("Connection timeout - inverter and/or gateway is offline");
         invstatus=0;
         sys.exit(1)
 
