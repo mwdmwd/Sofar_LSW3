@@ -269,7 +269,7 @@ if invstatus>0:
     jsonoutput["Country"] != "Europe General"
     or jsonoutput["Total generation time (h)"] == 0
     or jsonoutput["Today production (Wh)"] == 0
-    and jsonoutput["Today generation time (min)"] != 0
+    and jsonoutput["Today generation time (min)"] >= 60
     or jsonoutput["PV1 Voltage (V)"] < 30
     or jsonoutput["Total production (kWh)"] == 0
   ):
