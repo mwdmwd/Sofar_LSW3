@@ -341,7 +341,7 @@ if mqtt==1:
       }.items():
         val = jsonoutput[json_key]
         val = round(val, 3)
-        if val < 0:
+        if "ºC" not in json_key and val < 0 or val < -30:
           print(f"Bad value on {json_key}: {val}")
           sys.exit(1)
         if "(Wh)" in json_key:
