@@ -309,7 +309,7 @@ def publish_one(topic, val):
 # MQTT integration (Domoticz, HA, pure MQTT)
 if mqtt==1:
   # Initialise MQTT connection
-  client=paho.Client("inverter")
+  client=paho.Client()
   if mqtt_tls=="1":
     client.tls_set(mqtt_cacert,tls_version=mqtt_tls_ver)
     client.tls_insecure_set(mqtt_tls_insecure)
