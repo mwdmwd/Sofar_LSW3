@@ -8,7 +8,8 @@ import sys
 import socket
 import binascii
 import re
-import libscrc
+from crcmod.predefined import mkCrcFun
+modbus_crc = mkCrcFun("modbus")
 import json
 import paho.mqtt.client as paho
 import os
@@ -141,7 +142,7 @@ if invstatus==1:
     pos_ini=str(hex(pini)[2:4].zfill(4))
     pos_fin=str(hex(pfin-pini+1)[2:4].zfill(4))
     businessfield= binascii.unhexlify('0103' + pos_ini + pos_fin) # sin CRC16MODBUS
-    crc=binascii.unhexlify(str(hex(libscrc.modbus(businessfield))[4:6])+str(hex(libscrc.modbus(businessfield))[2:4])) # CRC16modbus
+    crc=binascii.unhexlify(str(hex(modbus_crc(businessfield))[4:6])+str(hex(modbus_crc(businessfield))[2:4])) # CRC16modbus
     checksum=binascii.unhexlify('00') #checksum F2
     endCode = binascii.unhexlify('15')
 
